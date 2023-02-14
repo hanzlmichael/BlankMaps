@@ -1,0 +1,17 @@
+<%- include('partials/head'); %>
+<%- include('partials/navbar'); %>
+
+
+<div class="test-wrap">
+  <a id="add-new-test" href="tests/new">
+    <span class="material-symbols-outlined">add</span>
+    <span>nový test</span>
+  </a>
+
+  <% for (let i = 0; i < tests.length; i++) { %>
+    <div class="test"><%= tests[i].title %></div> 
+  <%};%>  
+</div>
+
+  
+<%- include('partials/footer'); %>

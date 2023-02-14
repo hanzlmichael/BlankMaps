@@ -1,0 +1,14 @@
+<body>
+  <div class="layout">
+    <div class="black-line"></div>
+    <div class="navbar">
+      <a class="logo" href="/">blankmaps</a>
+
+      <% if (user) { %>
+        <a href="/logout" class="login">Odhlásit se</a>
+      <% } else { %>
+        <a href="/login" class="login">Přihlásit se</a>  
+      <% } %>      
+    </div>
+    <main>
+    
