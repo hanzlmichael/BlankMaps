@@ -2,6 +2,32 @@
 <%- include('partials/navbar'); %>
 
 
+<%
+  function parseTimeFromMongoose(timestamp) {
+    const convertedTime = new Date(timestamp)    
+    let convert = convertedTime.toLocaleString('en-GB')
+    convert = convert.replace(/\//g, '. ');
+    return convert;
+  }
+%>
+
+<script>
+  async function deleteTest(id) {
+    try {
+      const res = await fetch(`/tests/${id.value}`, {
+        method: 'DELETE', 
+        headers: {'Content-Type': 'application/json'}
+      })
+      if (res) {
+        location.assign('/tests')
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+</script>
+
 <div class="test-wrap">
   <a id="add-new-test" href="tests/new">
     <span class="material-symbols-outlined">add</span>
@@ -9,9 +35,34 @@
   </a>
 
   <% for (let i = 0; i < tests.length; i++) { %>
-    <div class="test"><%= tests[i].title %></div> 
+    <div class="test">
+      <span class="title"><%= tests[i].title %></span>
+      <div class="tooltip"><%= tests[i].title %></div>
+      <div class="date-created-wrap">
+        <span>Datum vytvoření:</span>
+        <span class="date-created"><%= parseTimeFromMongoose(tests[i].createdAt) %></span>
+      </div>
+      <div class="date-edited-wrap">
+        <span>Poslední úprava:</span>
+        <span class="date-created"><%= parseTimeFromMongoose(tests[i].updatedAt) %></span>
+      </div>
+      <div class="copy-link-wrap">
+        <div>link pro sdílení testu</div>
+        <div class="url-wrap">
+           <input readonly value="<%= tests[i]._id %>"></input>
+            <button class="material-symbols-outlined copy-text">content_copy</button>
+        </div> 
+        <div class="message">Link zkopírován!</div>
+      </div>
+        <div class="manipulate-btn-wrap">
+          <button>Upravit</button>
+          <button class="delete-btn" value="<%= tests[i]._id %>" onclick="deleteTest(this)">Smazat</button>
+        </div>
+        <button class="results-btn">Výsledky</button>
+    </div>     
   <%};%>  
 </div>
 
   
 <%- include('partials/footer'); %>
+

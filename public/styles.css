@@ -217,40 +217,34 @@ background: radial-gradient(circle, rgba(236,236,236,1) 0%, rgba(255,255,255,1) 
   padding: 1rem;
   background-color: white;
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap:1rem;
   grid-auto-rows: min-content;
-}
-.test {
-  padding:1rem;
-  background-color: rgb(241, 241, 241);
-  color:rgb(22, 22, 22);
-  height:20rem;
 }
 
 #add-new-test {
   border:none;
   outline:none;
-  grid-column: span 2;
+  grid-column: span 3;
   justify-self: flex-start;
   border-radius: 0.5rem;
   padding:1rem;
   display:flex;
   align-items:center;
   justify-content:center;
-  background-color:rgb(235,235,235);
-  color:rgb(45,45,45);
+  background-color:rgb(15 144 245);
+  color:rgb(255 255 255);
   cursor:pointer;
   gap:0.5rem;
   width:15rem;
   font-size:1rem;
   text-transform:uppercase;
-  font-weight:600;
+  font-weight:500;
   letter-spacing:0.075rem;
   text-decoration: none;
 }
 #add-new-test:hover {
-  background-color:rgb(225,225,225);
+  background-color:rgb(10, 134, 240);
 }
 #add-new-test span:last-child {
   margin-right:1.5rem;
@@ -264,6 +258,23 @@ background: radial-gradient(circle, rgba(236,236,236,1) 0%, rgba(255,255,255,1) 
     background-color: white;
     display:grid;
     grid-template-rows: auto 1fr;
+}
+
+@media only screen and (max-width: 1000px){
+  .test-wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+  #add-new-test {
+    grid-column: span 2;
+  }
+}
+@media only screen and (max-width: 600px){
+  .test-wrap {
+    grid-template-columns: 1fr;
+  }
+  #add-new-test {
+    grid-column: span 1;
+  }
 }
 
 /* PAGE 1 */
@@ -1068,6 +1079,7 @@ tr {
     font-weight: 500;
     font-size: 1.25rem;
 }
+
 .btn {
   outline:none;
   border:none;
@@ -1107,3 +1119,138 @@ tr {
   height:3rem;
   width: 100%;
 }
+
+/* test wrap */
+
+.test {
+  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: rgb(251, 251, 251);  
+  color:rgb(22, 22, 22);
+  height: fit-content;
+  border-radius:0.35rem;
+  text-overflow:  ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position:relative;
+  border: 2px solid rgb(240,240,240);
+}
+.test .title {
+  font-weight:600;
+  width:100%;
+  cursor:pointer;
+}
+.test .title:hover + .tooltip {
+  opacity:1;
+}
+.test .date-created-wrap, .test .date-edited-wrap {
+  font-size:0.7rem;
+  color:rgb(75,75,75);
+}
+.test button {
+  cursor:pointer;
+  border-radius:0.35rem;
+  font-weight:600;
+  border:none;
+  color:rgb(35,35,35);
+  text-transform:uppercase;
+  letter-spacing:0.05rem;
+}
+.copy-link-wrap {
+  margin-top:0.5rem;
+  width:100%;
+  background-color:rgb(235,235,235);
+  padding:0.5rem 0.5rem 0.1rem 0.5rem;
+  border-radius:0.35rem;  
+  position:relative;
+}
+.copy-link-wrap div:first-child {
+  font-size:0.8rem;
+  text-transform:uppercase;
+  letter-spacing:0.05rem;
+  font-weight:500;
+  padding-bottom:0.25rem;
+  padding-left:0.25rem;
+  border-bottom: 1px solid rgb(210,210,210);
+}
+.url-wrap {
+  display:flex;
+}
+
+.copy-link-wrap input {
+  width:100%;
+  outline:none;
+  border:none;
+  padding:0.25rem;
+  background-color:rgb(235,235,235); 
+}
+
+.copy-link-wrap button  {
+ background-color:inherit;
+  display:inline-block;
+  height:2rem;
+  width:2rem;
+  border-radius:0.5rem;
+}
+.copy-link-wrap button:hover {
+  background-color:rgb(225,225,225);
+}
+
+.manipulate-btn-wrap {
+  display:flex;
+  gap:0.5rem;
+  margin-top:0.5rem;
+}
+.manipulate-btn-wrap button {
+  width:50%;
+  padding:0.5rem 0;
+}
+.manipulate-btn-wrap button:first-child {
+  background-color:rgb(235,235,235);
+}
+.manipulate-btn-wrap button:last-child {
+  background-color: rgba(244, 198, 198,0.8)
+}
+.manipulate-btn-wrap button:first-child:hover {
+  background-color:rgb(225,225,225);
+}
+.manipulate-btn-wrap button:last-child:hover {
+  background-color: rgb(244, 198, 198)
+}
+.test .results-btn {
+  width:100%;
+  padding:1rem 0;
+  font-size:1rem;
+  margin-top:0.5rem;
+  background-color:rgb(235,235,235);
+  color: rgb(35,35,35);
+}
+.results-btn:hover {
+  background-color:rgb(225,225,225);
+}
+.test .delete-btn {
+  color:#f53c3c;
+}
+.tooltip {
+  max-width:400px;
+  position:absolute;
+  white-space: normal;
+  color:rgb(240,240,240);
+  background-color:rgb(35,35,35);
+  padding:0.5rem;
+  border-radius:0.5rem;
+  text-align:center;
+  opacity:0;
+  margin-right:1rem;
+  z-index:99;
+}
+.message {
+  background-color:rgb(35,35,35);
+  color:rgb(240,240,240);
+  width:fit-content;
+  position:absolute;
+  padding:0.5rem;
+  border-radius:0.5rem;
+  right:0;
+  display:none;
+}
+

@@ -39,6 +39,10 @@ async function saveTestToDb() {
       headers: {'Content-Type': 'application/json'},
       credentials: 'include'
     })
+    if (res) {
+      console.log('res : ', res)
+      location.assign('/tests')
+    }
   }
   catch (err) {
     console.log(err)
