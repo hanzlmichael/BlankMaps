@@ -140,7 +140,7 @@
              <details>
               <summary>
                  <span>Zkusit náhodně (1-10)</span>
-                 <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z"/></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="m12 15.375-6-6 1.4-1.4 4.6 4.6 4.6-4.6 1.4 1.4Z" fill="#545151"/></svg>
               </summary>
               <div class="generate-wrap">
                  <input type="number" id="generate-answers-input" min="1" max="10" value="1">
@@ -163,7 +163,106 @@
        </div>
     </div>
     <div class="finishing-test-page">
-      Dokončení
+      <div id="test-name-wrap">
+        <h4 class="wrap-heading">Název testu</h4>
+        <input type="text">
+      </div>
+
+      
+      <div class="marks-wrap">
+        <h4 class="wrap-heading">nastavení známkování</h4>
+        <table>
+          <thead>
+             <tr class="head-row">
+              <td>známka</td>
+              <td>body</td>
+            </tr>
+          </thead> 
+          <tr>
+              <td>
+                <span class="mark-number">1</span>
+              </td>
+            <td>
+              <input class="table-input-number" type="number" value="0">
+              <span class="dash">–</span>
+              <input class="table-input-number" type="number" value="0">
+             </td>
+          </tr>
+          <tr>
+            <td>
+                <span class="mark-number">2</span>
+              </td>
+            <td>
+              <input class="table-input-number" type="number" value="0">
+              <span class="dash">–</span>
+              <input class="table-input-number" type="number" value="0">
+             </td>
+          </tr>
+          <tr>
+            <td>
+                <span class="mark-number">3</span>
+              </td>
+            <td>
+              <input class="table-input-number" type="number" value="0">
+              <span class="dash">–</span>
+              <input class="table-input-number" type="number" value="0">
+             </td>
+          </tr>
+          <tr>
+            <td>
+                <span class="mark-number">4</span>
+              </td>
+            <td>
+              <input class="table-input-number" type="number" value="0">
+              <span class="dash">–</span>
+              <input class="table-input-number" type="number" value="0">
+             </td>
+          </tr>
+          <tr>
+            <td>
+                <span class="mark-number">5</span>
+              </td>
+            <td>
+              <input class="table-input-number" type="number" value="0">
+              <span class="dash">–</span>
+              <input class="table-input-number" type="number" value="0">
+             </td>
+          </tr>
+        </table>  
+        <div class="total-points-wrap">
+          <span>Celkový počet bodů je: </span>
+          <span id="total-points-value">0</span>
+        </div>  
+      </div>
+      <div class="time-limit-wrap">
+        <h4 class="wrap-heading">Časový limit: </h4>
+        <select name="time-limit" id="selectTimeLimit">
+          <option value="null">Bez limitu</option>
+          <option value="5">5 minut</option>
+          <option value="10">10 minut</option>
+          <option value="15">15 minut</option>
+          <option value="20">20 minut</option>
+          <option value="25">25 minut</option>
+          <option value="30">30 minut</option>
+          <option value="35">35 minut</option>
+          <option value="40">40 minut</option>
+          <option value="45">45 minut</option>
+          <option value="50">50 minut</option>
+          <option value="55">55 minut</option>
+          <option value="60">60 minut</option>
+        </select>
+        <div>
+          <label for="shuffleQuestions">
+            <h4 class="wrap-heading">Zamíchat otázky:</h4>
+          </label>
+          <input type="checkbox" id="shuffleQuestions">                  
+        </div>
+      </div>
+      <button id="saveTest" class="btn btn--icon--before btn--blue btn--large">
+        <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M42 13.85V39q0 1.2-.9 2.1-.9.9-2.1.9H9q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h25.15Zm-3 1.35L32.8 9H9v30h30ZM24 35.75q2.15 0 3.675-1.525T29.2 30.55q0-2.15-1.525-3.675T24 25.35q-2.15 0-3.675 1.525T18.8 30.55q0 2.15 1.525 3.675T24 35.75ZM11.65 18.8h17.9v-7.15h-17.9ZM9 15.2V39 9Z"/></svg>
+        uložit test
+      </button>
+    </div>
     </div>
   </div>
 </div>
@@ -259,63 +358,7 @@
 </style>
 
 <script>
-  let dots = document.querySelectorAll('.circle-wrap .dot')
-  let texts = document.querySelectorAll('.circle-wrap .circle-text')
-  let line = document.querySelector('.progress-line')
-  let pages = document.querySelector('.pages').children
-  let count = 0
-  let previousBtn = document.querySelector('#previous-page')
-  let nextBtn = document.querySelector('#next-page')
-  
-  previousBtn.onclick = previousPage
-  nextBtn.onclick = nextPage
-  
-  function previousPage() {
-    if (isCountInvalid(count, -1)) return 
-    dots[count].classList.remove('dot-active')
-    findActiveAndDeactivate()   
-    count--;
-    displayPage(count)
-    displayCorrectLine(count)
-    texts[count].classList.add('circle-text-active')  
-  }
-  function nextPage() {
-    if (isCountInvalid(count, 1)) return 
-    count++
-    displayPage(count)
-    displayCorrectLine(count)
-    dots[count].classList.add('dot-active')
-    findActiveAndDeactivate()
-    texts[count].classList.add('circle-text-active')
-  }
-  function findActiveAndDeactivate() {
-    texts.forEach(el=> {
-      if (el.classList.contains('circle-text-active')) {
-        el.classList.remove('circle-text-active')
-      }
-    })
-  }
-  
-  function displayCorrectLine(count) {
-    line.className = ''
-    line.classList.add('progress-line', `line-active${count}`)
-  }
-  
-  function isCountInvalid(count, num) {
-    let temp = count + num
-    console.log('temp: ', temp)
-    let exists = texts?.[temp]
-    console.log('exists: ', exists)
-    if (exists !== undefined) return false
-    return true
-  }
-    
-  function displayPage(count) {
-    for (item of pages) {
-      item.style.display = 'none'
-    }
-    pages[count].style.display = 'block'
-  }
+ // import { test } from '../components/questions.js';
 
   function onlyOne(checkbox) {
     debugger;
@@ -348,6 +391,7 @@
         allCategories[index].terms.push(term);
       }
     })
+    console.log(allCategories);
     return allCategories;
   }
 
@@ -415,6 +459,7 @@
     parent.insertAdjacentHTML('beforeend', html);
   }
 
+    
  
 
 </script>

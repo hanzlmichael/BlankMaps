@@ -10,6 +10,7 @@ import { startDrawPoint } from './funcionality/addPoint.js';
 import { initObjectDeleteIcon } from './globalPrototypeSetting.js';
 import { turnOfControls } from "./globalPrototypeSetting.js";
 import { resetZoom } from './components/map.js';
+import { initProgressBar } from './components/progressBar.js';
 
 let wrap = document.querySelector('.canvas-wrap')
 export var canvas = new fabric.Canvas('canvas');
@@ -26,6 +27,7 @@ activateZooming();
 initObjectDeleteIcon();
 turnOfControls();
 activateSettings();
+initProgressBar();
 
 function activateSettings() {
   fabric.Object.prototype.padding = 10;

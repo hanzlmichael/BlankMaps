@@ -10,6 +10,7 @@ export function initQuestionsBar() {
   document.querySelector('.wrap-questions').addEventListener('input', changeQuestion);
   test = new Test("", questions, maps);
 
+  saveTestBtn.addEventListener('click', saveTestToDb);
   //document.querySelector('#testbtn').addEventListener('click', saveQuestion);
 }
 
@@ -17,9 +18,33 @@ let actualQuestionIndex = -1;
 let questionNumber = 0;
 
 
-let maps = [];
+export let maps = [];
 let questions = [];
 export let test;
+
+
+let testTitle = document.querySelector('#test-name-wrap input')
+let saveTestBtn = document.querySelector('#saveTest');
+
+
+async function saveTestToDb() {
+  try {
+    console.log('yes')
+    let title = testTitle.value;
+    let categories = getTags();
+    console.log('title ', title);
+    const res = await fetch('/tests', {
+      method: 'POST', 
+      body: JSON.stringify( { title, categories, test } ),
+      headers: {'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
 
 
 function addNewQuestion() {

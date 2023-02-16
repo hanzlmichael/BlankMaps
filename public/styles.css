@@ -420,7 +420,6 @@ background: radial-gradient(circle, rgba(236,236,236,1) 0%, rgba(255,255,255,1) 
     word-break: break-all;
     display: inline-flex;
     font-weight: 450;
-    text-transform: uppercase;
   }
   .tag-nonclosable {
     align-self:center;
@@ -705,7 +704,7 @@ input[type="color"]:hover {
 }
 /* icony na canvasu konec*/
 
-.question-setting-wrap select {
+.question-setting-wrap select,  #selectTimeLimit{
   background: rgb(235,235,235);
   width:100%;
   outline:none;
@@ -724,6 +723,7 @@ input[type="color"]:hover {
   font-size:1.125rem;
   /* border-left:3px solid rgb(255, 195, 0); */
   padding-left:0.5rem;
+  color:#31404C;
 }
 
 /* BODY */
@@ -782,7 +782,6 @@ input[type="color"]:hover {
   font-weight:450;
   grid-column: span 1;
   height:2.5rem;
-  
 }
 .answer-text::placeholder {
   color:rgba(75,75,105,0.5);
@@ -932,4 +931,179 @@ summary::-webkit-details-marker {
   padding-right:0.5rem;
   color: #31404C;
   height: 41px;
+}
+
+/* PAGE 4*/
+
+#test-name-wrap, .time-limit-wrap {
+  background-color: rgb(245,245,245);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+#test-name-wrap input {
+  border: none;
+  width: 100%;
+  font-size: 1.75rem;
+  font-weight: 400;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: rgb(235,235,235);
+  color: #474747;
+  outline:none;
+}
+/* tabulka */
+.marks-wrap {
+  padding: 1rem;
+  background-color: rgb(245,245,245);
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+.marks-wrap {
+  width: 100%;
+  max-width: 40rem;
+}
+table {
+  background-color: rgb(255 255 255);
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+.marks-wrap tbody {
+  background-color: white;
+}
+thead {
+  text-transform:uppercase;
+  font-weight:bold;  
+}
+tr,td {
+  border-radius:0.25rem;
+  background-color: white;
+}
+.head-row td {
+  border-radius:0;
+  color: #4f4f4f;
+  background-color:rgb(235,235,235);
+}
+tbody tr {
+  background-color:rgb(242,242,242);
+}
+
+table tr:not(:last-child) {
+  border-bottom:2px solid rgb(232,232,232);;
+}
+
+td {
+  text-align:center;
+  width:15rem;
+}
+.table-input-number {
+  width:3rem;
+  background-color: rgb(235,235,235);
+}
+table .dash {
+  font-weight:bold;
+  position:relative;
+}
+table input {
+  border:none;
+  font-size:1rem;
+  text-align:center;
+  border-radius:0.25rem;
+  outline:none;
+  color: #4f4f4f;
+  font-weight:450;
+  font-size:1.25rem;
+}
+tr {
+  height:2.5rem;
+}
+.mark-number {
+  background-color:  rgb(82 154 214);
+  width:2.5rem;
+  display:inline-block;
+  text-align:center;
+  font-weight:450;
+  font-size:1.25rem;
+  border-radius:0.5rem;
+  color: #ffffff;
+}
+
+.marks-wrap input::-webkit-outer-spin-button,
+.marks-wrap input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.marks-wrap input[type=number] {
+  -moz-appearance: textfield;
+}
+/* konec tabulka */
+
+.time-limit-wrap div {
+  display: flex;
+    margin-top: 0.5rem;
+}
+.time-limit-wrap input {
+  accent-color: white;
+  margin-left: 0.5rem;
+  width: 1.5rem;
+  position: relative;
+  top: -0.25rem;
+}
+.total-points-wrap {
+  display: flex;
+  align-items: center;
+  gap:0.5rem;
+  background-color: rgb(235,235,235);
+  padding: 0.5rem;
+  width: fit-content;
+  border-radius: 0.5rem;
+  margin-top: 1rem; 
+  color: #4f4f4f;
+}
+#total-points-value {
+  padding: 0 0.5rem;
+    background: #b1b1b1;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+.btn {
+  outline:none;
+  border:none;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:1.25px;
+  text-transform:uppercase;
+  padding:0.5rem 1rem;
+  border-radius:0.5rem;
+  display:flex;
+  align-items:center;
+  height:2.5rem;
+  background-color: rgb(240,240,240);
+  justify-content:center;
+  cursor:pointer;
+}
+.btn--blue {
+  color: #2468b8;
+  background-color: #e7effc;
+}
+.btn--icon--before {
+  padding:0.5rem 1rem 0.5rem 0;
+}
+.btn--blue svg {
+  fill: #2468b8;
+}
+.btn svg {
+  transform:scale(0.5);
+}
+.btn--blue:hover {
+  background-color: #d6e3fa;
+}
+#saveTest {
+  margin-top: 1rem;
+}
+.btn--large {
+  height:3rem;
+  width: 100%;
 }
