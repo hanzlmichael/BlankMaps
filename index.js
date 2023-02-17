@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const testRoutes = require('./routes/testRoutes')
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 require('dotenv').config()
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 
@@ -16,7 +17,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'));
 app.use(express.json({ limit: '10mb'}));
 app.use(cookieParser());
-
+app.use(cors());
 /* const dbURI = process.env.DB_CONNECT;
 
 mongoose.connect(dbURI)
