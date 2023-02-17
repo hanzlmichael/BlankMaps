@@ -7,6 +7,7 @@ require('dotenv').config()
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 
 const app = express()
+const PORT = process.env.PORT || 3210;
 
 // view engine 
 app.set('view engine', 'ejs')
@@ -16,16 +17,28 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '10mb'}));
 app.use(cookieParser());
 
-// databaze
-const dbURI = process.env.DB_CONNECT;
-/* mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => app.listen(3000))
-  .catch((err) => console.log(err));
- */
+/* const dbURI = process.env.DB_CONNECT;
+
 mongoose.connect(dbURI)
   .then(() => app.listen(3210))
   .catch((err) => console.log(err))
-// routes
+
+ */
+mongoose.set('strictQuery', false);
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DB_CONNECT);
+    console.log(`MongoDB connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+  })
+})
 
 
 app.get('*', checkUser);
