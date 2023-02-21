@@ -8,7 +8,7 @@
     let convert = convertedTime.toLocaleString('en-GB')
     convert = convert.replace(/\//g, '. ');
     return convert;
-  }
+  }  
 %>
 
 <script>
@@ -19,13 +19,22 @@
         headers: {'Content-Type': 'application/json'}
       })
       if (res) {
-        location.assign('/tests')
+        location.assign('/tests');
       }
     }
     catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
+
+  function editTest(id) {
+    location.assign(`/tests/${id.value}`);
+  }
+
+  function url() {
+    return 'URL ADRESS'
+  }
+
 </script>
 
 <div class="test-wrap">
@@ -49,13 +58,13 @@
       <div class="copy-link-wrap">
         <div>link pro sdílení testu</div>
         <div class="url-wrap">
-           <input readonly value="<%= tests[i]._id %>"></input>
-            <button class="material-symbols-outlined copy-text">content_copy</button>
+           <input readonly value="<%=tests[i]._id %>"></input>
+           <button class="material-symbols-outlined copy-text">content_copy</button>
         </div> 
         <div class="message">Link zkopírován!</div>
       </div>
         <div class="manipulate-btn-wrap">
-          <button>Upravit</button>
+          <button value="<%= tests[i]._id %>" onclick="editTest(this)">Upravit</button>
           <button class="delete-btn" value="<%= tests[i]._id %>" onclick="deleteTest(this)">Smazat</button>
         </div>
         <button class="results-btn">Výsledky</button>
@@ -65,4 +74,36 @@
 
   
 <%- include('partials/footer'); %>
+<script>
+  let allUrlInputs = document.querySelectorAll('.url-wrap input')
+  console.log(allUrlInputs)
+  allUrlInputs.forEach(el => {
+    el.value = window.location.href + '/' + el.value;
+  })
+
+  let copyBtn = document.querySelector('.copy-text')
+let copyInput = document.querySelector('.copy-link-wrap input')
+
+copyBtn.addEventListener('click', selectTextAndCopy)
+
+function selectTextAndCopy() {
+  copyInput.focus()
+  copyInput.select() 
+  copyInput.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(copyInput.value);
+}
+
+document.querySelectorAll('.copy-text').forEach(el => {
+  console.log('y')
+  el.addEventListener('click', showTip)
+})
+
+function showTip() {
+  console.log('yes')
+  document.querySelector('.message').style.display = 'block';
+  setTimeout(() => {
+    document.querySelector('.message').style.display= 'none';
+  },600)
+}
+</script>
 

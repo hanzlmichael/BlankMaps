@@ -54,7 +54,22 @@
             <div>Max. velikost mapy: 1 Mb</div>
             <div>Max. počet map: 5</div>
       </div>
-      <div class="maps-wrap"></div>
+      <div class="maps-wrap">
+        <% if (test) { %>
+          <% for (let i = 0; i < test.test.maps.length; i++) { %>
+            <div class="map-wrap" id=" <%= test.test.maps[i].mapId %> ">
+              <div class="map-image">
+                <img src="<%= test.test.maps[i].src %>" alt="map">
+                <span class="close-map">✖</span>
+              </div>
+              <div class="map-info">
+                <div class="placeholder">Název mapy</div>
+                <input type="text" value="<%= test.test.maps[i].title %>">
+              </div>
+            </div>
+          <% } %> 
+        <% } %> 
+      </div>
     </div>
 
     <div class="category-and-terms-page">
@@ -66,6 +81,14 @@
           mohly být např: <strong>stát</strong>, <strong>řeka</strong>, <strong>pohoří</strong>, ... )
         </div>
         <div class="tags-outer">
+          <% if (test) { %>
+            <% for (let i = 0; i < test.categories.length; i++) { %>
+              <div class="tag tag-category">
+                <span> <%= test.categories[i].category %> </span>
+                <span class="close-tag">×</span>
+              </div>
+            <% } %>
+          <% } %>
           <div contenteditable="true" class="tags" placeholder="Přidat kategorii ..."></div>
           <button id="add">+</button>
         </div>
@@ -78,6 +101,23 @@
           mohly být pojmy: <strong>Česko</strong>, <strong>Slovensko</strong>,
           <strong>Německo</strong>, ... )
         </div>
+        <% if (test) { %>
+          <% for (let i = 0; i < test.categories.length; i++) { %>
+            <div class="tags-outer tags-outer-term">
+              <div class="tag-nonclosable"><%= test.categories[i].category %> :</div>
+              <div class="wrap-tags">
+                <% for (let j = 0; j < test.categories[i].terms.length; j++) { %>
+                  <div class="tag tag-term">
+                    <span><%= test.categories[i].terms[j] %></span>
+                    <span class="close-tag">×</span>
+                  </div>
+                <% } %>
+                <div contenteditable="true" class="tags-term" placeholder="Přidat pojem ..."></div>
+              </div>
+              <button class="add-term">+</button>
+            </div>
+          <% } %> 
+        <% } %> 
       </div>
     </div>
     <div class="creating-questions-page">
@@ -128,21 +168,41 @@
 
          <div class="question-setting-wrap">
            <h4 class="wrap-heading">mapa</h4>
-           <select name="choose-from-map" id="select-map">
-             <option value="" disabled selected>Vyberte mapu</option>
-           </select>
+
+           <% if (test) { %>
+            <select name="choose-from-map" id="select-map">
+              <option value="" disabled selected>Vyberte mapu</option>
+              <% for (let i = 0; i < test.test.maps.length; i++) { %>
+                <option value="<%= test.test.maps[i].mapId %>"><%= test.test.maps[i].title %></option>
+              <% } %>
+            </select>
+         <% } else { %>
+          <select name="choose-from-map" id="select-map">
+            <option value="" disabled selected>Vyberte mapu</option>
+          </select>
+         <% } %>
 
            <div class="line-separator"></div>
 
            <h4 class="wrap-heading">kategorie otázky</h4>
-           <select name="choose-from-map" id="select-category">
-             <option value="none" disabled selected>Kategorie</option>
-           </select>
+           <% if (test) { %>
+              <select name="choose-from-map" id="select-category">
+                <option value="none" disabled selected>Kategorie</option>
+                <% for (let i = 0; i < test.categories.length; i++) { %>
+                  <option value="<%= test.categories[i].category %>"><%= test.categories[i].category %></option>
+                <% } %>
+              </select>
+           <% } else { %>
+              <select name="choose-from-map" id="select-category">
+                <option value="none" disabled selected>Kategorie</option>
+              </select>
+           <% } %>
+
            <div class="line-separator"></div> 
            <h4 class="wrap-heading">nastavení odpovědí</h4>
 
            <div class="answers-btns-wrap">   
-             <button class="btn-basic-grey" id="add-answer-wrap">+</button>           
+                   
              <details>
               <summary>
                  <span>Zkusit náhodně (1-10)</span>
@@ -153,6 +213,7 @@
                  <button id="generate-answers-btn">generovat</button>
               </div>
            </details>
+           <button class="btn-basic-grey" id="add-answer-wrap">+</button>  
            </div>
            <div class="answers-wrap"></div>
            <div class="line-separator"></div>
@@ -171,7 +232,11 @@
     <div class="finishing-test-page">
       <div id="test-name-wrap">
         <h4 class="wrap-heading">Název testu</h4>
-        <input type="text">
+        <% if (test) { %>
+          <input type="text" value="<%= test.title %>">
+         <% } else { %>
+          <input type="text">
+        <% } %>
       </div>
 
       

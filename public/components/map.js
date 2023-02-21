@@ -20,23 +20,27 @@ const config = {
 const targetNode = document.querySelector('.maps-wrap');
 
 function observe() {
+  debugger;
  
   const callback = mutations => {
     mutations.forEach(mutation => {
+      debugger;
       if (mutation.type === 'childList') {
         if (mutation.addedNodes[0]) {          
           console.log(mutation.addedNodes[0].querySelector('input').value)
-          
+          debugger;
           mutation.addedNodes[0].id = `map${mapCount++}`;
           let mapId = mutation.addedNodes[0].id;
           //console.log(mapId)
           //let element = mutation.addedNodes[0].querySelector('img')
           maps.push({
+            title: mutation.addedNodes[0].querySelector('input').value,
             mapId: mutation.addedNodes[0].id,
             src: mutation.addedNodes[0].querySelector('img').getAttribute('src')
           })
 
           test.maps.push({
+            title: mutation.addedNodes[0].querySelector('input').value,
             mapId: mutation.addedNodes[0].id,
             src: mutation.addedNodes[0].querySelector('img').getAttribute('src')
           })
@@ -79,9 +83,10 @@ function observe() {
 
 function handleMapChangeName(e) {
   if (e.target.matches('.maps-wrap .map-wrap input')) {
-    let elem = e.target.closest('.map-wrap')
-    let index = findIndex(elem)
-    selectMap.item(index+1).textContent = e.target.value
+    let elem = e.target.closest('.map-wrap');
+    let index = findIndex(elem);
+    selectMap.item(index+1).textContent = e.target.value;
+    test.maps[index].title = e.target.value;
   }
 }
 

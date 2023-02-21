@@ -9,8 +9,7 @@ export function initQuestionsBar() {
   document.querySelector('#delete-question').addEventListener('click', deleteQuestion);
   document.querySelector('.wrap-questions').addEventListener('input', changeQuestion);
   test = new Test("", questions, maps);
-
-  saveTestBtn.addEventListener('click', saveTestToDb);
+  saveTestBtn.addEventListener('click', handleTestInDb);
   //document.querySelector('#testbtn').addEventListener('click', saveQuestion);
 }
 
@@ -19,13 +18,24 @@ let questionNumber = 0;
 
 
 export let maps = [];
-let questions = [];
 export let test;
-
+let questions = [];
 
 let testTitle = document.querySelector('#test-name-wrap input')
 let saveTestBtn = document.querySelector('#saveTest');
 
+function handleTestInDb() {
+  let url = window.location.href;
+  const lastString = url.split("/").pop();
+  console.log('laststring ',lastString)
+  if (lastString == 'new') {
+    console.log('savetesttodb')
+    saveTestToDb();
+  } else {
+    console.log('updatetestindb')
+    updateTestInDb(lastString);
+  }
+}
 
 async function saveTestToDb() {
   try {
@@ -33,8 +43,31 @@ async function saveTestToDb() {
     let title = testTitle.value;
     let categories = getTags();
     console.log('title ', title);
-    const res = await fetch('/tests', {
+    const res = await fetch('/tests/new', {
       method: 'POST', 
+      body: JSON.stringify( { title, categories, test } ),
+      headers: {'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
+    if (res) {
+      console.log('res : ', res)
+      location.assign('/tests')
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+async function updateTestInDb(id) {
+  try {
+    console.log('yes')
+    let title = testTitle.value;
+    let categories = getTags();
+    console.log('id ', id);
+    let fetchUrl = '/tests/' + id;
+    console.log('fetchurl ', fetchUrl)
+    const res = await fetch(fetchUrl, {
+      method: 'PUT', 
       body: JSON.stringify( { title, categories, test } ),
       headers: {'Content-Type': 'application/json'},
       credentials: 'include'
@@ -196,22 +229,6 @@ function displayPanel() {
 function hidePanel() {
   panel.style.display = 'none';
 }
-
-let questionObject = {
-  map: "",
-  category:"",
-  answers:[],
-  points: 1,
-  shapes: "",
-  color: "",
-  thickness: "",
-  borderColor: ""
-}
-
-
-
-
-
 
 // nastaveni bodů
 function getPoints() {

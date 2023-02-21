@@ -728,6 +728,9 @@ input[type="color"]:hover {
   color: #545151; 
   height: 41px;
 }
+#selectTimeLimit {
+ max-width: 15rem;;
+}
 .wrap-heading {
   text-transform:uppercase;
   margin-bottom:0.5rem;
