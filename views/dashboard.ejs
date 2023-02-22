@@ -75,35 +75,36 @@
   
 <%- include('partials/footer'); %>
 <script>
+  console.log('yes')
+  debugger;
   let allUrlInputs = document.querySelectorAll('.url-wrap input')
   console.log(allUrlInputs)
   allUrlInputs.forEach(el => {
     el.value = window.location.href + '/' + el.value;
   })
 
-  let copyBtn = document.querySelector('.copy-text')
-let copyInput = document.querySelector('.copy-link-wrap input')
+  let copyBtns = document.querySelectorAll('.copy-text');
+  let copyInput = document.querySelector('.copy-link-wrap input');
 
-copyBtn.addEventListener('click', selectTextAndCopy)
+  copyBtns.forEach(el => el.addEventListener('click', selectTextAndCopy));
 
-function selectTextAndCopy() {
-  copyInput.focus()
-  copyInput.select() 
-  copyInput.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(copyInput.value);
-}
+  function selectTextAndCopy(e) {
+    e.target.previousElementSibling.select()
+    e.target.previousElementSibling.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(e.target.previousElementSibling.value);
+  }
 
-document.querySelectorAll('.copy-text').forEach(el => {
-  console.log('y')
-  el.addEventListener('click', showTip)
-})
+  document.querySelectorAll('.copy-text').forEach(el => {
+    el.addEventListener('click', showTip)
+  })
 
-function showTip() {
-  console.log('yes')
-  document.querySelector('.message').style.display = 'block';
-  setTimeout(() => {
-    document.querySelector('.message').style.display= 'none';
-  },600)
-}
+  function showTip(e) {
+    let parent = e.target.parentNode;
+    let messageElement = parent.nextElementSibling;
+    messageElement.style.display = 'block';
+    setTimeout(() => {
+      messageElement.style.display= 'none';
+    },600)
+  }
 </script>
 

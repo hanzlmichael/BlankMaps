@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Test = require('../models/Test');
+const mongoose = require('mongoose');
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -40,4 +42,45 @@ const checkUser = (req, res, next) => {
   }
 };
 
-module.exports = { requireAuth, checkUser };
+const checkAuthor = async (req, res, next) => {
+  let testId = req.url.substring(1, req.url.length)
+
+  // check if user has a valid token
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, 'net ninja secret', async (err, decodedToken) => {
+      if (err) {
+        res.locals.author = null;
+        next();
+      } else {
+        let user, teacherRef;
+        
+        // use Promise.all() to wait for both queries to complete
+        await Promise.all([
+          User.findById(decodedToken.id).select("_id").exec(),
+          Test.findById(testId).select("teacherRef").exec()
+        ])
+          .then(([userDoc, testDoc]) => {
+            user = userDoc._id.toString();
+            teacherRef = testDoc.teacherRef.toString();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        if (user == teacherRef) {
+          res.locals.author = user;
+        } else {
+          res.locals.author = null;
+        }
+
+        next();
+      }
+    });
+  } else {
+    res.locals.author = null;
+    next();
+  }
+}
+
+module.exports = { requireAuth, checkUser, checkAuthor };
